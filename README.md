@@ -1,46 +1,67 @@
-# Calendario
+# Google Calendar desde Python
 
-Programa de consola en Python para crear un evento en el calendario principal de tu cuenta de Google. Pide el título, una descripción opcional, la fecha y hora de inicio y la duración. Al terminar, muestra el enlace al evento.
+**Python 3.11+** · **Google Calendar API v3** · **[Licencia MIT](LICENSE)**
 
-## Archivos del proyecto
+Crea eventos en tu calendario principal desde la terminal. Escribe el título, una descripción opcional, la fecha y hora de inicio y la duración. El programa te devuelve un enlace para abrir el evento en Google Calendar.
 
-- `crear_evento.py` valida los datos, autoriza la cuenta con OAuth y envía el evento a Google Calendar.
-- `requirements.txt` enumera las dependencias que instala `pip`.
-- `.gitignore` mantiene las credenciales, la sesión y los archivos locales de Python fuera de Git.
-- `README.md` reúne los pasos para configurar, ejecutar y publicar el proyecto.
+**[Instalar](#instalar) · [Google Cloud](#configurar-google-cloud) · [Ejemplo de uso](#ejemplo-de-uso) · [Archivos](#archivos-del-proyecto)**
+
+---
+
+## Instalar
+
+Necesitas Python 3.11 o posterior y una cuenta de Google. En PowerShell, clona el proyecto y prepara el entorno.
+
+```powershell
+git clone https://github.com/TheRevised/Google_Calendar.git
+cd Google_Calendar
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+Si ya tienes el proyecto en tu equipo, ejecuta los dos últimos comandos desde su carpeta.
 
 ## Configurar Google Cloud
 
-1. Abre [Google Cloud Console](https://console.cloud.google.com/) y crea o selecciona un proyecto.
-2. Habilita la [API de Google Calendar](https://console.cloud.google.com/apis/library/calendar-json.googleapis.com/) en ese proyecto.
-3. En **Google Auth Platform**, configura **Branding**. Si usas una cuenta personal, selecciona audiencia **Externa** y, mientras la aplicación esté en pruebas, agrega en **Audience** la cuenta de Google con la que iniciarás sesión.
-4. En **Data Access**, agrega el permiso `https://www.googleapis.com/auth/calendar.events.owned`. Este permiso permite administrar eventos en los calendarios de tu propiedad.
-5. En **Clients**, crea un cliente OAuth de tipo **Desktop app**. Descarga el archivo JSON, renómbralo a `credentials.json` y colócalo junto a `crear_evento.py`.
+1. Crea o selecciona un proyecto en [Google Cloud Console](https://console.cloud.google.com/).
+2. Habilita la [API de Google Calendar](https://console.cloud.google.com/apis/library/calendar-json.googleapis.com/) en el proyecto.
+3. Completa **Branding** en **Google Auth Platform**. Si usas una cuenta personal y la aplicación está en modo de prueba, selecciona la audiencia **Externa** y agrega tu cuenta a **Usuarios de prueba** en **Audience**.
+4. En **Data Access**, agrega el permiso `https://www.googleapis.com/auth/calendar.events.owned`, que permite administrar eventos en calendarios de tu propiedad.
+5. En **Clients**, crea un cliente OAuth de tipo **Desktop app**. Descarga el JSON, renómbralo a `credentials.json` y colócalo junto a `crear_evento.py`.
 
 [Guía oficial de Google Calendar API para Python](https://developers.google.com/workspace/calendar/api/quickstart/python)
 
-## Instalar y ejecutar
+> [!IMPORTANT]
+> Conserva `credentials.json` y `token.json` en tu equipo. Git excluye ambos archivos.
 
-Usa Python 3.11 o posterior. En PowerShell, desde la carpeta `OpenClaw`, ejecuta los siguientes comandos.
+## Ejemplo de uso
 
 ```powershell
-cd Calendario
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe crear_evento.py
 ```
 
-Escribe la fecha y hora como `AAAA-MM-DD HH:MM`. Presiona **Enter** en la duración para usar 60 minutos. El programa usa la zona horaria de Tijuana. Puedes cambiarla en `ZONA_HORARIA` dentro de `crear_evento.py`.
-
-La primera vez se abrirá el navegador para que autorices la cuenta donde quieres crear el evento. El programa guarda la sesión en `token.json`. Si cambias de cuenta o se revoca la sesión, elimina ese archivo y vuelve a ejecutar el programa.
-
-## Subir a GitHub
-
-Crea un repositorio vacío en GitHub y ejecuta estos comandos desde `Calendario`. Sustituye la URL de ejemplo por la del repositorio.
-
-```powershell
-git remote add origin https://github.com/TU-USUARIO/Calendario.git
-git push -u origin main
+```text
+Título: Reunión de equipo
+Descripción (opcional): Revisar las tareas de la semana
+Inicio en America/Tijuana (AAAA-MM-DD HH:MM): 2026-11-10 09:00
+Duración en minutos [60]: 45
+Evento creado: Reunión de equipo
 ```
 
-Conserva `credentials.json` y `token.json` en tu equipo. El archivo `.gitignore` los excluye junto con el entorno de Python.
+El enlace al evento aparece debajo de la confirmación. Pulsa **Enter** en la duración para usar 60 minutos. Para cambiar la zona horaria, edita `ZONA_HORARIA` en [crear_evento.py](crear_evento.py).
+
+La primera vez se abrirá el navegador para que autorices tu cuenta. Si quieres usar otra cuenta o necesitas volver a autorizar el programa, elimina `token.json` y ejecútalo de nuevo.
+
+## Archivos del proyecto
+
+| Archivo | Función |
+| --- | --- |
+| [`crear_evento.py`](crear_evento.py) | Valida los datos, autoriza la cuenta y envía el evento. |
+| [`requirements.txt`](requirements.txt) | Lista las dependencias de Python. |
+| [`.gitignore`](.gitignore) | Excluye credenciales, sesiones y archivos locales de Python. |
+| [`README.md`](README.md) | Reúne los pasos de instalación, configuración y uso. |
+| [`LICENSE`](LICENSE) | Contiene la licencia MIT. |
+
+## Licencia
+
+El proyecto se distribuye bajo la [licencia MIT](LICENSE).
