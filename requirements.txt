@@ -1,4 +1,11 @@
+# Cliente oficial para enviar eventos a Google Calendar.
 google-api-python-client>=2,<3
+
+# Adaptador HTTP para autenticar las peticiones del cliente de Google.
 google-auth-httplib2>=0.2,<1
+
+# Flujo OAuth que abre el navegador para autorizar la cuenta.
 google-auth-oauthlib>=1,<2
+
+# Datos de zonas horarias para zoneinfo, necesarios en Windows.
 tzdata

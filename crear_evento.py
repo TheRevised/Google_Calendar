@@ -18,6 +18,7 @@ from oauthlib.oauth2 import OAuth2Error
 CARPETA = Path(__file__).resolve().parent
 CREDENCIALES = CARPETA / "credentials.json"
 TOKEN = CARPETA / "token.json"
+# OAuth permite gestionar eventos en calendarios de los que la cuenta es dueña.
 PERMISOS = ["https://www.googleapis.com/auth/calendar.events.owned"]
 ZONA_HORARIA = "America/Tijuana"
 
@@ -33,6 +34,7 @@ def obtener_credenciales():
         if credenciales.valid:
             return credenciales
 
+    # Una sesión vencida se puede renovar sin volver a abrir el navegador.
     if credenciales and credenciales.refresh_token:
         credenciales.refresh(Request())
     else:
@@ -44,6 +46,7 @@ def obtener_credenciales():
         # Google devuelve la autorización a un puerto disponible de la computadora.
         credenciales = flujo.run_local_server(port=0)
 
+    # Guarda la sesión nueva o renovada para la siguiente ejecución.
     TOKEN.write_text(credenciales.to_json(), encoding="utf-8")
     return credenciales
 
@@ -78,7 +81,7 @@ def pedir_evento():
     except (ValueError, OverflowError):
         raise ValueError("La duración debe ser un número entero positivo válido.") from None
 
-    # Calendar usa summary como título y acepta HTML en la descripción.
+    # Calendar usa summary como título. Escapamos la descripción para tratarla como texto.
     return {
         "summary": titulo,
         "description": escape(descripcion),
@@ -93,6 +96,7 @@ def main():
         evento = pedir_evento()
         credenciales = obtener_credenciales()
         with build("calendar", "v3", credentials=credenciales) as servicio:
+            # primary identifica el calendario principal de la cuenta autorizada.
             creado = servicio.events().insert(calendarId="primary", body=evento).execute()
     except (KeyboardInterrupt, EOFError):
         print("\nOperación cancelada.", file=sys.stderr)

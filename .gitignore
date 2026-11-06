@@ -1,10 +1,14 @@
-# Credenciales de Google y tokens de sesión
+# Cliente OAuth de Google Cloud y nombre original de la descarga.
 credentials.json
 client_secret*.json
+
+# Sesión que genera el programa tras autorizar la cuenta.
 token.json
+
+# Variables de entorno locales que podrían contener secretos.
 .env
 
-# Entorno local de Python
+# Entorno virtual y archivos de caché que genera Python.
 .venv/
 __pycache__/
 *.py[cod]

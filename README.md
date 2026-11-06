@@ -2,6 +2,13 @@
 
 Programa de consola en Python para crear un evento en el calendario principal de tu cuenta de Google. Pide el título, una descripción opcional, la fecha y hora de inicio y la duración. Al terminar, muestra el enlace al evento.
 
+## Archivos del proyecto
+
+- `crear_evento.py` valida los datos, autoriza la cuenta con OAuth y envía el evento a Google Calendar.
+- `requirements.txt` enumera las dependencias que instala `pip`.
+- `.gitignore` mantiene las credenciales, la sesión y los archivos locales de Python fuera de Git.
+- `README.md` reúne los pasos para configurar, ejecutar y publicar el proyecto.
+
 ## Configurar Google Cloud
 
 1. Abre [Google Cloud Console](https://console.cloud.google.com/) y crea o selecciona un proyecto.
