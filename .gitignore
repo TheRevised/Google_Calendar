@@ -4,6 +4,7 @@ client_secret*.json
 
 # Sesión que genera el programa tras autorizar la cuenta.
 token.json
+.token-*.json.tmp
 
 # Variables de entorno locales que podrían contener secretos.
 .env
